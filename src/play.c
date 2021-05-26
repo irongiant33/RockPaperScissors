@@ -216,7 +216,6 @@ int main()
         display_title();
         int bot_id = validate_input(NUM_BOTS);
         bot_func_ptr bot = choose_bot(bot_id);
-        bool in_game = true;
         display_instructions(bot_id);
         validate_input(ANY_NUMBER);
         stats_t * game_stats = initialize_stats(bot_id);

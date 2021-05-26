@@ -1,9 +1,15 @@
-#resource for creating this file: https://cmake.org/cmake/help/latest/guide/tutorial/index.html#a-basic-starting-point-step-1
-
+#https://cmake.org/cmake/help/latest/guide/tutorial/index.html#a-basic-starting-point-step-1
 cmake_minimum_required(VERSION 3.10)
+set(PROJECT_NAME "RockPaperScissors")
+project(${PROJECT_NAME} "C")
 
-# set the project name
-project(RockPaperScissors)
+set(ITEM_CODE ${PROJECT_NAME}_code)
+set(ITEM_EXEC ${PROJECT_NAME})
+
+add_library(${ITEM_CODE} SHARED "src/play.c" "include/play.h" "src/bots.c" "include/bots.h")
 
 # add the executable
-add_executable(RockPaperScissors src/play.c)
+add_executable(${ITEM_EXEC} src/play.c)
+
+target_link_libraries(${ITEM_EXEC} ${ITEM_CODE})
+target_compile_options(${ITEM_EXEC} PUBLIC "-Wall" "-Wextra" "-g")

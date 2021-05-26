@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/irongiant/RockPaperScissors/include/bots.h
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+play.h
+/home/irongiant/RockPaperScissors/include/play.h
+
+/home/irongiant/RockPaperScissors/include/play.h
+stdlib.h
+-
+stdio.h
+-
+unistd.h
+-
+stdbool.h
+-
+string.h
+-
+
+/home/irongiant/RockPaperScissors/src/play.c
+../include/bots.h
+/home/irongiant/RockPaperScissors/include/bots.h
+
