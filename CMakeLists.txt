@@ -6,7 +6,7 @@ project(${PROJECT_NAME} "C")
 set(ITEM_CODE ${PROJECT_NAME}_code)
 set(ITEM_EXEC ${PROJECT_NAME})
 
-add_library(${ITEM_CODE} SHARED "src/play.c" "include/play.h" "src/bots.c" "include/bots.h")
+add_library(${ITEM_CODE} SHARED "src/play.c" "src/bots.c" "src/display.c" "include/functions.h" "include/structs.h" "include/define.h")
 
 # add the executable
 add_executable(${ITEM_EXEC} src/play.c)

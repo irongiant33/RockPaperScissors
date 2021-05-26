@@ -6,17 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/irongiant/RockPaperScissors/include/bots.h
+/home/irongiant/RockPaperScissors/include/define.h
 stdio.h
 -
 stdlib.h
 -
 time.h
 -
-play.h
-/home/irongiant/RockPaperScissors/include/play.h
-
-/home/irongiant/RockPaperScissors/include/play.h
 stdlib.h
 -
 stdio.h
@@ -28,7 +24,15 @@ stdbool.h
 string.h
 -
 
+/home/irongiant/RockPaperScissors/include/functions.h
+structs.h
+/home/irongiant/RockPaperScissors/include/structs.h
+
+/home/irongiant/RockPaperScissors/include/structs.h
+define.h
+/home/irongiant/RockPaperScissors/include/define.h
+
 /home/irongiant/RockPaperScissors/src/play.c
-../include/bots.h
-/home/irongiant/RockPaperScissors/include/bots.h
+../include/functions.h
+/home/irongiant/RockPaperScissors/include/functions.h
 

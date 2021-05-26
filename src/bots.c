@@ -1,4 +1,4 @@
-#include "../include/bots.h"
+#include "../include/functions.h"
 
 //global variable to track probability parameters through the game. 
 //should be freed after each game.

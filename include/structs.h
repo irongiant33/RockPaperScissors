@@ -1,12 +1,7 @@
-#ifndef BOTS_H
-#define BOTS_H
+#ifndef STRUCTS_H
+#define STRUCTS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "play.h"
-
-#define NUM_BOTS 4
+#include "define.h"
 
 typedef int (*bot_func_ptr)(int);
 
@@ -27,15 +22,17 @@ typedef struct bayes
     int priors[NUM_CHOICES];
 } bayes_t;
 
-bot_func_ptr choose_bot(int bot_index);
-int random_bot(int prev_user_choice);
-int low_confidence_bot(int prev_user_choice);
-int high_confidence_bot(int prev_user_choice);
-int random_weight_bot(int prev_user_choice);
-int confidence_bot(int confidence, int prev_user_choice);
-int weighting_bot(int confidence, int prev_user_choice);
-bayes_t * allocate_bayes(int confidence);
-void free_bayes();
-void display_params();
+typedef struct stats
+{
+    int game_num;
+    int bot_wins;
+    int user_wins;
+    int num_ties;
+    int bot_id; 
+    char * user_selection;
+    char * bot_selection;
+    int * user_choice;
+    int * bot_choice;
+} stats_t;
 
 #endif

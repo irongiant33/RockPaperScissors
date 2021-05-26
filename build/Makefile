@@ -163,6 +163,33 @@ src/bots.c.s:
 	$(MAKE) -f CMakeFiles/RockPaperScissors_code.dir/build.make CMakeFiles/RockPaperScissors_code.dir/src/bots.c.s
 .PHONY : src/bots.c.s
 
+src/display.o: src/display.c.o
+
+.PHONY : src/display.o
+
+# target to build an object file
+src/display.c.o:
+	$(MAKE) -f CMakeFiles/RockPaperScissors_code.dir/build.make CMakeFiles/RockPaperScissors_code.dir/src/display.c.o
+.PHONY : src/display.c.o
+
+src/display.i: src/display.c.i
+
+.PHONY : src/display.i
+
+# target to preprocess a source file
+src/display.c.i:
+	$(MAKE) -f CMakeFiles/RockPaperScissors_code.dir/build.make CMakeFiles/RockPaperScissors_code.dir/src/display.c.i
+.PHONY : src/display.c.i
+
+src/display.s: src/display.c.s
+
+.PHONY : src/display.s
+
+# target to generate assembly for a file
+src/display.c.s:
+	$(MAKE) -f CMakeFiles/RockPaperScissors_code.dir/build.make CMakeFiles/RockPaperScissors_code.dir/src/display.c.s
+.PHONY : src/display.c.s
+
 src/play.o: src/play.c.o
 
 .PHONY : src/play.o
@@ -206,6 +233,9 @@ help:
 	@echo "... src/bots.o"
 	@echo "... src/bots.i"
 	@echo "... src/bots.s"
+	@echo "... src/display.o"
+	@echo "... src/display.i"
+	@echo "... src/display.s"
 	@echo "... src/play.o"
 	@echo "... src/play.i"
 	@echo "... src/play.s"

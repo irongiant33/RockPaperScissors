@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/irongiant/RockPaperScissors/src/bots.c" "/home/irongiant/RockPaperScissors/build/CMakeFiles/RockPaperScissors_code.dir/src/bots.c.o"
+  "/home/irongiant/RockPaperScissors/src/display.c" "/home/irongiant/RockPaperScissors/build/CMakeFiles/RockPaperScissors_code.dir/src/display.c.o"
   "/home/irongiant/RockPaperScissors/src/play.c" "/home/irongiant/RockPaperScissors/build/CMakeFiles/RockPaperScissors_code.dir/src/play.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

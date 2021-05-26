@@ -1,3 +1,9 @@
+#ifndef DEFINE_H
+#define DEFINE_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -11,19 +17,7 @@
 #define ROCK 0
 #define PAPER 1
 #define SCISSORS 2
-
+#define NUM_BOTS 4
 #define DEBUG false
 
-typedef struct stats
-{
-    int game_num;
-    int bot_wins;
-    int user_wins;
-    int num_ties;
-    int bot_id; 
-    char * user_selection;
-    char * bot_selection;
-    int * user_choice;
-    int * bot_choice;
-} stats_t;
-
+#endif
