@@ -18,6 +18,7 @@
 #define PAPER 1
 #define SCISSORS 2
 #define NUM_BOTS 4
+#define BOT_NAME_LENGTH 25
 #define DEBUG false
 
 #endif

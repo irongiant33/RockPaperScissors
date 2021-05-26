@@ -90,26 +90,6 @@ stats_t * initialize_stats(int bot_id)
     return stats;
 }
 
-void assign_selection(int selection, char * string_selection)
-{
-    switch(selection)
-    {
-    case ROCK: ;
-        char rock[MAX_WORD_LENGTH] = "    Rock";
-        memcpy(string_selection, rock, MAX_WORD_LENGTH);
-        break;
-    case PAPER: ;
-        char paper[MAX_WORD_LENGTH] = "   Paper";
-        memcpy(string_selection, paper, MAX_WORD_LENGTH);
-        break;
-    case SCISSORS: ;
-        char scissors[MAX_WORD_LENGTH] = "Scissors";
-        memcpy(string_selection, scissors, MAX_WORD_LENGTH);
-        break;
-    }
-    return;
-}
-
 int main()
 {
     bool still_playing = true;
@@ -132,7 +112,7 @@ int main()
                 game_stats->bot_selection = calloc(MAX_WORD_LENGTH , sizeof(char));
             }
             game_stats->bot_choice[game_stats->game_num - 1] = game_stats->game_num == 1 ? (*bot)(-1) : (*bot)(game_stats->user_choice[game_stats->game_num - 2]);
-            assign_selection(game_stats->bot_choice[game_stats->game_num - 1], game_stats->bot_selection);
+            display_selection(game_stats->bot_choice[game_stats->game_num - 1], game_stats->bot_selection);
 
             //obtain user's selection
             if(game_stats->user_selection == NULL)
@@ -140,7 +120,7 @@ int main()
                 game_stats->user_selection = calloc(MAX_WORD_LENGTH, sizeof(char));
             }
             game_stats->user_choice[game_stats->game_num - 1] = validate_input(NUM_CHOICES);
-            assign_selection(game_stats->user_choice[game_stats->game_num - 1], game_stats->user_selection);
+            display_selection(game_stats->user_choice[game_stats->game_num - 1], game_stats->user_selection);
 
             //update stats
             int result = game_stats->user_choice[game_stats->game_num - 1] - game_stats->bot_choice[game_stats->game_num - 1];
@@ -158,13 +138,14 @@ int main()
                 game_stats->num_ties++;
             }
         }
+        //display end game stats and prompt for another round
         display_in_game(game_stats);
         int user_input = validate_input(2);
         if(user_input == 1)
         {
             still_playing = false;
+            system("clear");
         }
-        //write stats to a file
 
         //free all memory
         free_stats(game_stats);

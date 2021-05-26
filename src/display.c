@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-char bot_names[NUM_BOTS][20] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter"};
+char bot_names[NUM_BOTS][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter"};
 
 /**
  * Prints title screen
@@ -96,4 +96,24 @@ void display_in_game(stats_t * stats)
         printf("Would you like to play again:\n\t 1) Yes\n\t 2) No\n");
         printf("Choice: ");
     }
+}
+
+void display_selection(int selection, char * string_selection)
+{
+    switch(selection)
+    {
+    case ROCK: ;
+        char rock[MAX_WORD_LENGTH] = "    Rock";
+        memcpy(string_selection, rock, MAX_WORD_LENGTH);
+        break;
+    case PAPER: ;
+        char paper[MAX_WORD_LENGTH] = "   Paper";
+        memcpy(string_selection, paper, MAX_WORD_LENGTH);
+        break;
+    case SCISSORS: ;
+        char scissors[MAX_WORD_LENGTH] = "Scissors";
+        memcpy(string_selection, scissors, MAX_WORD_LENGTH);
+        break;
+    }
+    return;
 }

@@ -16,5 +16,6 @@ void display_params();
 void display_title();
 void display_instructions(int bot_index);
 void display_in_game(stats_t * stats);
+void display_selection(int selection, char * string_selection);
 
 #endif
