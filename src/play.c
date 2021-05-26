@@ -95,9 +95,28 @@ int main()
     bool still_playing = true;
     while(still_playing)
     {
-        display_title();
+        //main variables
+        int bot_id = NUM_BOTS;
+        int bot_index = 0;
+        bot_func_ptr * bot = calloc(2, sizeof(bot_func_ptr));
+
+        //start title screen
+        display_title(STARTUP, bot_id);
+        int game_mode = validate_input(NUM_GAME_MODES);
+        switch (game_mode)
+        {
+        case BOT_BOT:
+            display_title(FIRST_BOT, bot_id);
+            int first_bot_id = validate_input(NUM_BOTS);
+            bot[bot_index] = choose_bot(bot_id);
+            bot_index++;
+            break;
+        case SEQ_BOT:
+            break;
+        }
+        display_title(OPPONENT, bot_id);
         int bot_id = validate_input(NUM_BOTS);
-        bot_func_ptr bot = choose_bot(bot_id);
+        bot[bot_index] = choose_bot(bot_id);
         display_instructions(bot_id);
         validate_input(ANY_NUMBER);
         stats_t * game_stats = initialize_stats(bot_id);
@@ -150,5 +169,6 @@ int main()
         //free all memory
         free_stats(game_stats);
         free_bayes();
+        free(bot);
     }
 }

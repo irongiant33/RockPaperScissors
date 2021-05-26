@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-char bot_names[NUM_BOTS][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter"};
+char bot_names[NUM_BOTS + 1][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter", "The Human"};
 
 /**
  * Prints title screen
@@ -12,7 +12,7 @@ char bot_names[NUM_BOTS][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "C
  *        - None
  * 
  */
-void display_title()
+void display_title(int sequence_num, int bot_id)
 {
     system("clear");
     system("echo \"  _____            _      _____                         _____      _                        \"");
@@ -23,12 +23,30 @@ void display_title()
     system("echo \" |_|  \\_\\___/ \\___|_|\\_\\ |_|   \\__,_| .__/ \\___|_|    |_____/ \\___|_|___/___/\\___/|_|  |___/\"");
     system("echo \"                                    | |                                                     \"");
     system("echo \"                                    |_|                                                     \"");
-    printf("\n\n Choose the bot you wish to play against:\n");
-    for(int i = 1; i <= NUM_BOTS; i++)
+    if(sequence_num == STARTUP)
     {
-        printf("\t %d) %s\n", i, bot_names[i - 1]);
+        printf("\n\n Choose your game mode:\n");
+        printf("\t 1) Human vs. Bot\n");
+        printf("\t 2) Bot vs. Bot\n");
+        printf("\t 3) Sequence vs. Bot\n");
+        printf("\nChoice [1-3]: ");
     }
-    printf("\nEnter a value [1-%d]: ", NUM_BOTS);
+    else if(sequence_num == OPPONENT || sequence_num == FIRST_BOT)
+    {
+        if(sequence_num == FIRST_BOT)
+        {
+            printf("\n\n The first bot will be: \n");
+        }
+        else
+        {
+            printf("\n\n %s will compete against:\n", bot_names[bot_id]);
+        }
+        for(int i = 1; i <= NUM_BOTS; i++)
+        {
+            printf("\t %d) %s\n", i, bot_names[i - 1]);
+        }
+        printf("\nEnter a value [1-%d]: ", NUM_BOTS);
+    }
 }
 
 /**
