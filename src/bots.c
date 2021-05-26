@@ -71,6 +71,10 @@ bot_func_ptr choose_bot(int bot_id)
         break;
     case 2:
         bot = &high_confidence_bot;
+        break;
+    case 3:
+        bot = &random_weight_bot;
+        break;
     }
     return bot;
 }
@@ -99,7 +103,7 @@ int random_bot(int prev_user_choice)
  * choosing it conditioned on your last choice.
  * 
  * This is only first-order prediction, so it is fairly easy to predict when it
- * is going to change guesses.
+ * is going to change guesses. Final selections are NOT weighted.
  * 
  */
 int low_confidence_bot(int prev_user_choice)
@@ -116,13 +120,30 @@ int low_confidence_bot(int prev_user_choice)
  * choosing it conditioned on your last choice.
  * 
  * This is only first-order prediction, so it is fairly easy to predict when it
- * is going to change guesses.
+ * is going to change guesses. Final selections are NOT weighted.
  * 
  */
 int high_confidence_bot(int prev_user_choice)
 {
     int confidence = 10; //think about this as the number of games that have already been observed
     return confidence_bot(confidence, prev_user_choice);
+}
+
+/**
+ * A bot that uses conditional probabilities with LOWER prior confidence that
+ * your choices are actually random. It will take FEWER non-random selections
+ * to influence the probabilities that determine which selection is made. The bot
+ * will select the item which beats the item with the highest probability of you
+ * choosing it conditioned on your last choice.
+ * 
+ * This is only first-order prediction, so it is fairly easy to predict when it
+ * is going to change guesses. Final selections ARE weighted.
+ * 
+ */
+int random_weight_bot(int prev_user_choice)
+{
+    int confidence = 1; //think about this as the number of games that have already been observed
+    return weighting_bot(confidence, prev_user_choice);
 }
 
 int confidence_bot(int confidence, int prev_user_choice)
@@ -152,4 +173,39 @@ int confidence_bot(int confidence, int prev_user_choice)
     //return the option that beats what is most likely
     if(DEBUG){printf("max index: %d\n", max_index);}
     return (max_index + 1) % NUM_CHOICES;
+}
+
+int weighting_bot(int confidence, int prev_user_choice)
+{
+    float likelihoods[NUM_CHOICES];
+    if(prev_user_choice == -1)
+    {
+        params = allocate_bayes(confidence);
+        return random_bot(prev_user_choice);
+    }
+    if(DEBUG){display_params();}
+    float normalization = 0.0;
+    for(int i = 0; i < NUM_CHOICES; i++)
+    {
+        float division_factor = (1.0 / params->num_observations) * (1.0 / (NUM_CHOICES * params->num_observations));
+        likelihoods[i] = params->conditionals[prev_user_choice][i] * params->priors[i] * division_factor;
+        if(DEBUG){printf("%d) %.3f\n", i, likelihoods[i]);}
+        normalization += likelihoods[i];
+    }
+    update_params(prev_user_choice);
+
+    //return an option selected by weights
+    time_t t;
+    srand((unsigned) time(&t));
+    float rand_val = (float) rand() / RAND_MAX;
+    float offset = 0.0;
+    for(int i = 0; i < NUM_CHOICES; i++)
+    {
+        float val = likelihoods[i] / normalization + offset;
+        if(rand_val < val)
+        {
+            return (i + 1) % NUM_CHOICES;
+        }
+        offset += likelihoods[i] / normalization;
+    }
 }

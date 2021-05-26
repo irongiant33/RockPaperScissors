@@ -1,6 +1,6 @@
 #include "../include/bots.h"
 
-char bot_names[NUM_BOTS][20] = {"Random Randy", "Doubtful Doug", "Competitive Charlie"};
+char bot_names[NUM_BOTS][20] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter"};
 
 /**
  * Prints title screen
