@@ -6,6 +6,8 @@
 #include <time.h>
 #include "play.h"
 
+#define NUM_BOTS 4
+
 typedef int (*bot_func_ptr)(int);
 
 typedef struct bayes
@@ -29,7 +31,9 @@ bot_func_ptr choose_bot(int bot_index);
 int random_bot(int prev_user_choice);
 int low_confidence_bot(int prev_user_choice);
 int high_confidence_bot(int prev_user_choice);
+int random_weight_bot(int prev_user_choice);
 int confidence_bot(int confidence, int prev_user_choice);
+int weighting_bot(int confidence, int prev_user_choice);
 bayes_t * allocate_bayes(int confidence);
 void free_bayes();
 void display_params();

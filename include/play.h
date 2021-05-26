@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define NUM_BOTS 3
 #define NUM_CHOICES 3
 #define ANY_NUMBER 10
 #define MAX_WORD_LENGTH 9
