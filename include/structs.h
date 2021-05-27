@@ -28,7 +28,8 @@ typedef struct stats
     int bot_wins;
     int user_wins;
     int num_ties;
-    int bot_id; 
+    int bot_id;
+    int user_id;
     char * user_selection;
     char * bot_selection;
     int * user_choice;

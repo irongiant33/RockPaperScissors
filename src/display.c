@@ -87,22 +87,22 @@ void display_instructions(int bot_index)
 void display_in_game(stats_t * stats)
 {
     system("clear");
-    printf("***************************************************************\n");
-    printf("*                                                             *\n");
-    printf("*                     Game: %3d                               *\n", stats->game_num);
-    printf("*                 Bot Wins: %3d                               *\n", stats->bot_wins);
-    printf("*               Human Wins: %3d                               *\n", stats->user_wins);
-    printf("*                     Ties: %3d                               *\n", stats->num_ties);
+    printf("********************************************************************\n");
+    printf("*                                                                  *\n");
+    printf("*                  Games Played: %3d                               *\n", stats->game_num);
+    printf("*%25s Wins: %3d                               *\n", bot_names[stats->bot_id], stats->bot_wins);
+    printf("*%25s Wins: %3d                               *\n", bot_names[stats->user_id], stats->user_wins);
+    printf("*                          Ties: %3d                               *\n", stats->num_ties);
     if(stats->bot_selection != NULL)
     {
-        printf("*   Previous Bot Selection: %8s                          *\n", stats->bot_selection);
+        printf("*%20s Selection: %8s                          *\n", bot_names[stats->bot_id], stats->bot_selection);
     }
     if(stats->user_selection != NULL)
     {
-        printf("* Previous Human Selection: %8s                          *\n", stats->user_selection);
+        printf("*%20s Selection: %8s                          *\n", bot_names[stats->user_id], stats->user_selection);
     }
-    printf("*                                                             *\n");
-    printf("***************************************************************\n");
+    printf("*                                                                  *\n");
+    printf("********************************************************************\n");
     if(stats->game_num < NUM_GAMES)
     {
         printf("\n\nThe bot has made its selection. What do you choose?\n");

@@ -90,7 +90,7 @@ bot_func_ptr choose_bot(int bot_id)
 int random_bot(int prev_user_choice)
 {
     time_t t;
-    srand((unsigned) time(&t));
+    srand((unsigned) time(&t) - 1); //the 1 is arbitrary as I just want a different seed for each bot
     int selection = rand() % NUM_CHOICES;
     return selection;
 }
@@ -152,7 +152,10 @@ int confidence_bot(int confidence, int prev_user_choice)
     if(prev_user_choice == -1)
     {
         params = allocate_bayes(confidence);
-        return random_bot(prev_user_choice);
+        time_t t;
+        srand((unsigned) time(&t) - 3); //the 3 is arbitrary as I just want a different seed for each bot
+        int selection = rand() % NUM_CHOICES;
+        return selection;
     }
     if(DEBUG){display_params();}
     int max_index = -1;
@@ -178,10 +181,13 @@ int confidence_bot(int confidence, int prev_user_choice)
 int weighting_bot(int confidence, int prev_user_choice)
 {
     float likelihoods[NUM_CHOICES];
+    time_t t;
+    srand((unsigned) time(&t) - 5); //the 5 is arbitrary as I just want a different seed for each bot
     if(prev_user_choice == -1)
     {
         params = allocate_bayes(confidence);
-        return random_bot(prev_user_choice);
+        int selection = rand() % NUM_CHOICES;
+        return selection;
     }
     if(DEBUG){display_params();}
     float normalization = 0.0;
@@ -195,8 +201,6 @@ int weighting_bot(int confidence, int prev_user_choice)
     update_params(prev_user_choice);
 
     //return an option selected by weights
-    time_t t;
-    srand((unsigned) time(&t));
     float rand_val = (float) rand() / RAND_MAX;
     float offset = 0.0;
     for(int i = 0; i < NUM_CHOICES; i++)
