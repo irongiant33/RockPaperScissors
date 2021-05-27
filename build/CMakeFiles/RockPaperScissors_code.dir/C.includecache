@@ -36,11 +36,3 @@ define.h
 ../include/functions.h
 /home/irongiant/RockPaperScissors/include/functions.h
 
-/home/irongiant/RockPaperScissors/src/display.c
-../include/functions.h
-/home/irongiant/RockPaperScissors/include/functions.h
-
-/home/irongiant/RockPaperScissors/src/play.c
-../include/functions.h
-/home/irongiant/RockPaperScissors/include/functions.h
-
