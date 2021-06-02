@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-char bot_names[NUM_BOTS][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter"};
+char bot_names[NUM_BOTS + 2][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter", "The Human", "The Sequence"};
 
 /**
  * Prints title screen
@@ -12,7 +12,7 @@ char bot_names[NUM_BOTS][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "C
  *        - None
  * 
  */
-void display_title()
+void display_title(int sequence_num, int bot_id)
 {
     system("clear");
     system("echo \"  _____            _      _____                         _____      _                        \"");
@@ -23,12 +23,38 @@ void display_title()
     system("echo \" |_|  \\_\\___/ \\___|_|\\_\\ |_|   \\__,_| .__/ \\___|_|    |_____/ \\___|_|___/___/\\___/|_|  |___/\"");
     system("echo \"                                    | |                                                     \"");
     system("echo \"                                    |_|                                                     \"");
-    printf("\n\n Choose the bot you wish to play against:\n");
-    for(int i = 1; i <= NUM_BOTS; i++)
+    if(sequence_num == STARTUP)
     {
-        printf("\t %d) %s\n", i, bot_names[i - 1]);
+        printf("\n\n Choose your game mode:\n");
+        printf("\t 1) Human vs. Bot\n");
+        printf("\t 2) Bot vs. Bot\n");
+        printf("\t 3) Sequence vs. Bot\n");
+        printf("\t 4) Back to Main Menu");
+        printf("\nChoice [1-4]: ");
     }
-    printf("\nEnter a value [1-%d]: ", NUM_BOTS);
+    else if(sequence_num == OPPONENT || sequence_num == FIRST_BOT)
+    {
+        if(sequence_num == FIRST_BOT)
+        {
+            printf("\n\n The first bot will be: \n");
+        }
+        else
+        {
+            printf("\n\n %s will compete against:\n", bot_names[bot_id]);
+        }
+        for(int i = 1; i <= NUM_BOTS; i++)
+        {
+            printf("\t %d) %s\n", i, bot_names[i - 1]);
+        }
+        printf("\nEnter a value [1-%d]: ", NUM_BOTS);
+    }
+    else if(sequence_num == MENU)
+    {
+        printf("Main Menu:\n");
+        printf("\t1) Play\n");
+        printf("\t2) Settings\n");
+        printf("\nChoice [1-2]: ");
+    }
 }
 
 /**
@@ -69,23 +95,23 @@ void display_instructions(int bot_index)
 void display_in_game(stats_t * stats)
 {
     system("clear");
-    printf("***************************************************************\n");
-    printf("*                                                             *\n");
-    printf("*                     Game: %3d                               *\n", stats->game_num);
-    printf("*                 Bot Wins: %3d                               *\n", stats->bot_wins);
-    printf("*               Human Wins: %3d                               *\n", stats->user_wins);
-    printf("*                     Ties: %3d                               *\n", stats->num_ties);
+    printf("********************************************************************\n");
+    printf("*                                                                  *\n");
+    printf("*                  Games Played: %3d                               *\n", stats->game_num);
+    printf("*%25s Wins: %3d                               *\n", bot_names[stats->bot_id], stats->bot_wins);
+    printf("*%25s Wins: %3d                               *\n", bot_names[stats->user_id], stats->user_wins);
+    printf("*                          Ties: %3d                               *\n", stats->num_ties);
     if(stats->bot_selection != NULL)
     {
-        printf("*   Previous Bot Selection: %8s                          *\n", stats->bot_selection);
+        printf("*%20s Selection: %8s                          *\n", bot_names[stats->bot_id], stats->bot_selection);
     }
     if(stats->user_selection != NULL)
     {
-        printf("* Previous Human Selection: %8s                          *\n", stats->user_selection);
+        printf("*%20s Selection: %8s                          *\n", bot_names[stats->user_id], stats->user_selection);
     }
-    printf("*                                                             *\n");
-    printf("***************************************************************\n");
-    if(stats->game_num < NUM_GAMES)
+    printf("*                                                                  *\n");
+    printf("********************************************************************\n");
+    if(stats->game_num < stats->settings.num_games)
     {
         printf("\n\nThe bot has made its selection. What do you choose?\n");
         printf("\t 1) Rock\n\t 2) Paper\n\t 3) Scissors\n\n");
@@ -116,4 +142,33 @@ void display_selection(int selection, char * string_selection)
         break;
     }
     return;
+}
+
+void display_sequence(stats_t * game_stats)
+{
+    system("clear");
+    printf("********************************************************************\n");
+    printf("*                                                                  *\n");
+    printf("*                           Sequence                               *\n");
+    printf("*                                                                  *\n");
+    printf("********************************************************************\n");
+    printf("\nPlease create a .txt file in the /sequences directory containing your sequence. You may use\n");
+    printf("either capital or lowercase R, P, S to denote rock, paper, and scissors\n");
+    printf("respectively. The first letter in your sequence will denote your choice for\n");
+    printf("the first game, the second letter for the second game, etc. up to the max\n");
+    printf("of %d games. Anything other than R, P, S will be ignored.\n", game_stats->settings.num_games);
+    printf("\nIf you wish the sequence to repeat, simply enter one loop of the sequence.\n");
+    printf("The program will autopopulate the rest of the games to repeat that sequence.\n");
+    printf("\nPlease enter the name of your text file (including .txt): ");
+}
+
+void display_settings()
+{
+    system("clear");
+    printf("********************************************************************\n");
+    printf("*                                                                  *\n");
+    printf("*                           Sequence                               *\n");
+    printf("*                                                                  *\n");
+    printf("********************************************************************\n");
+    printf("\nIf you wish to change the settings, enter an appropriate value. Otherwise, just enter.\n");
 }

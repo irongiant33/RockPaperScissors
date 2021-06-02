@@ -13,9 +13,12 @@ int weighting_bot(int confidence, int prev_user_choice);
 bayes_t * allocate_bayes(int confidence);
 void free_bayes();
 void display_params();
-void display_title();
+void display_title(int sequence_num, int bot_id);
 void display_instructions(int bot_index);
 void display_in_game(stats_t * stats);
 void display_selection(int selection, char * string_selection);
+void set_seed();
+void display_sequence(stats_t * game_stats);
+void display_settings();
 
 #endif

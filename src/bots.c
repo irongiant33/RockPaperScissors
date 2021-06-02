@@ -4,6 +4,7 @@
 //should be freed after each game.
 bayes_t * params = NULL;
 int prev_choice_buffer[2] = {-1, -1};
+bool seed_set = false;
 
 
 bayes_t * allocate_bayes(int confidence)
@@ -80,6 +81,23 @@ bot_func_ptr choose_bot(int bot_id)
 }
 
 /**
+ * Set the random seed once at the beginning of each game. If you were to set
+ * the seed multiple times in this fashion, the fast run time of the program
+ * would make the random choices more deterministic.
+ * 
+ */
+void set_seed()
+{
+    if(!seed_set)
+    {
+        time_t t;
+        srand((unsigned) time(&t));
+        seed_set = true;
+    }
+    return;
+}
+
+/**
  * Picks rock, paper, scissors at random and returns it. The most difficult
  * opponent.
  * 
@@ -89,8 +107,6 @@ bot_func_ptr choose_bot(int bot_id)
  */
 int random_bot(int prev_user_choice)
 {
-    time_t t;
-    srand((unsigned) time(&t));
     int selection = rand() % NUM_CHOICES;
     return selection;
 }
@@ -152,7 +168,8 @@ int confidence_bot(int confidence, int prev_user_choice)
     if(prev_user_choice == -1)
     {
         params = allocate_bayes(confidence);
-        return random_bot(prev_user_choice);
+        int selection = rand() % NUM_CHOICES;
+        return selection;
     }
     if(DEBUG){display_params();}
     int max_index = -1;
@@ -181,7 +198,8 @@ int weighting_bot(int confidence, int prev_user_choice)
     if(prev_user_choice == -1)
     {
         params = allocate_bayes(confidence);
-        return random_bot(prev_user_choice);
+        int selection = rand() % NUM_CHOICES;
+        return selection;
     }
     if(DEBUG){display_params();}
     float normalization = 0.0;
@@ -195,8 +213,6 @@ int weighting_bot(int confidence, int prev_user_choice)
     update_params(prev_user_choice);
 
     //return an option selected by weights
-    time_t t;
-    srand((unsigned) time(&t));
     float rand_val = (float) rand() / RAND_MAX;
     float offset = 0.0;
     for(int i = 0; i < NUM_CHOICES; i++)
