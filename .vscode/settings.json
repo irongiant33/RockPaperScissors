@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "bots.h": "c",
-        "*.in": "cpp"
-    }
-}

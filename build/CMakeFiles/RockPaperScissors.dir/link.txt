@@ -1,1 +1,0 @@
-/usr/bin/cc    CMakeFiles/RockPaperScissors.dir/src/play.c.o  -o RockPaperScissors  -Wl,-rpath,/home/irongiant/RockPaperScissors/build libRockPaperScissors_code.so 
