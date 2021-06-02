@@ -32,7 +32,7 @@ structs.h
 define.h
 /home/irongiant/RockPaperScissors/include/define.h
 
-/home/irongiant/RockPaperScissors/src/bots.c
+/home/irongiant/RockPaperScissors/src/play.c
 ../include/functions.h
 /home/irongiant/RockPaperScissors/include/functions.h
 

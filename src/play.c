@@ -1,5 +1,7 @@
 #include "../include/functions.h"
 
+char sequence_dir[] = "../sequences/";
+
 /**
  * Accepts one character of user input and checks to make sure it falls within
  * the range of available bots.
@@ -90,6 +92,84 @@ stats_t * initialize_stats(int bot_id)
     return stats;
 }
 
+void validate_sequence(stats_t * game_stats)
+{
+    //get a proper filename from the user
+    FILE *fp;
+    bool valid_input = false;
+    while(!valid_input)
+    {
+        char * filename = calloc(NUM_GAMES + sizeof(sequence_dir), sizeof(char));
+        char * user_input = calloc(NUM_GAMES, sizeof(char));
+        scanf("%s", user_input);
+        int sequence_dir_len = sizeof(sequence_dir);
+        filename = strncat(filename, sequence_dir, sequence_dir_len);
+        filename = strncat(filename, user_input, NUM_GAMES);
+        fp = fopen(filename, "r");
+        if(fp == NULL)
+        {
+            printf("\ninvalid filename. enter again: ");
+        }
+        else
+        {
+            valid_input = true;
+        }
+        free(filename);
+        free(user_input);
+    }
+
+    //log all of the correct game entries within the file
+    int game_num = 0;
+    while(game_num < NUM_GAMES)
+    {
+        int entry = fgetc(fp);
+        if(entry == EOF){break;}
+        switch (entry)
+        {
+        case 'r':
+            game_stats->user_choice[game_num] = ROCK;
+            game_num++;
+            break;
+        case 'R':
+            game_stats->user_choice[game_num] = ROCK;
+            game_num++;
+            break;
+        case 'p':
+            game_stats->user_choice[game_num] = PAPER;
+            game_num++;
+            break;
+        case 'P':
+            game_stats->user_choice[game_num] = PAPER;
+            game_num++;
+            break;
+        case 's':
+            game_stats->user_choice[game_num] = SCISSORS;
+            game_num++;
+            break;
+        case 'S':
+            game_stats->user_choice[game_num] = SCISSORS;
+            game_num++;
+            break;
+        }
+    }
+    
+    //check to make sure the file wasn't empty or filled with junk characters
+    if(game_num == 0)
+    {
+        game_stats->user_choice[game_num] = ROCK;
+        game_num++;
+    }
+
+    //fill in the rest of the games if only a partial sequence was completed.
+    int counter = 0;
+    int num_entered_games = game_num;
+    while(game_num < NUM_GAMES)
+    {
+        game_stats->user_choice[game_num] = game_stats->user_choice[counter % num_entered_games];
+        game_num++;
+    }
+}
+
 stats_t * play_human_bot()
 {
     //prompt for opponent
@@ -100,6 +180,7 @@ stats_t * play_human_bot()
 
     stats_t * game_stats = initialize_stats(bot_id);
     game_stats->user_id = NUM_BOTS; //the human player
+    set_seed();
     while(game_stats->game_num < NUM_GAMES)
     {
         //display selection menu to user
@@ -158,6 +239,7 @@ stats_t * play_bot_bot()
 
     stats_t * game_stats = initialize_stats(bot_id);
     game_stats->user_id = first_bot_id; //user is aka the first bot
+    set_seed();
     while(game_stats->game_num < NUM_GAMES)
     {
         //obtain second bot's selection
@@ -197,8 +279,54 @@ stats_t * play_bot_bot()
 
 stats_t * play_seq_bot()
 {
-    printf("happy");
-    stats_t * game_stats = initialize_stats(1);
+    //prompt for opponent
+    int bot_id = NUM_BOTS + 1; //sequence ID
+    display_title(OPPONENT, bot_id);
+    bot_id = validate_input(NUM_BOTS);
+    bot_func_ptr bot = choose_bot(bot_id);
+
+    //initialize stats
+    stats_t * game_stats = initialize_stats(bot_id);
+    game_stats->user_id = NUM_BOTS + 1; //the sequence
+    set_seed();
+
+    //prompt for sequence
+    display_sequence(game_stats);
+    validate_sequence(game_stats);
+
+    while(game_stats->game_num < NUM_GAMES)
+    {
+        //obtain bot's selection
+        if(game_stats->bot_selection == NULL)
+        {
+            game_stats->bot_selection = calloc(MAX_WORD_LENGTH , sizeof(char));
+        }
+        game_stats->bot_choice[game_stats->game_num] = game_stats->game_num == 0 ? (*bot)(-1) : (*bot)(game_stats->user_choice[game_stats->game_num - 1]);
+        display_selection(game_stats->bot_choice[game_stats->game_num], game_stats->bot_selection);
+
+        //obtain user's selection
+        if(game_stats->user_selection == NULL)
+        {
+            game_stats->user_selection = calloc(MAX_WORD_LENGTH, sizeof(char));
+        }
+        display_selection(game_stats->user_choice[game_stats->game_num], game_stats->user_selection);
+
+        //update stats
+        int result = game_stats->user_choice[game_stats->game_num] - game_stats->bot_choice[game_stats->game_num];
+        game_stats->game_num++;
+        if(result == -2 || result == 1)
+        {
+            game_stats->user_wins++;
+        }
+        else if(result == -1 || result == 2)
+        {
+            game_stats->bot_wins++;
+        }
+        else
+        {
+            game_stats->num_ties++;
+        }
+    }
     return game_stats;
 }
 

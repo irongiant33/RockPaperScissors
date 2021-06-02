@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-char bot_names[NUM_BOTS + 1][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter", "The Human"};
+char bot_names[NUM_BOTS + 2][BOT_NAME_LENGTH] = {"Random Randy", "Doubtful Doug", "Competitive Charlie", "Weighing Walter", "The Human", "The Sequence"};
 
 /**
  * Prints title screen
@@ -134,4 +134,22 @@ void display_selection(int selection, char * string_selection)
         break;
     }
     return;
+}
+
+void display_sequence(stats_t * game_stats)
+{
+    system("clear");
+    printf("********************************************************************\n");
+    printf("*                                                                  *\n");
+    printf("*                           Sequence                               *\n");
+    printf("*                                                                  *\n");
+    printf("********************************************************************\n");
+    printf("\nPlease create a .txt file in the /sequences directory containing your sequence. You may use\n");
+    printf("either capital or lowercase R, P, S to denote rock, paper, and scissors\n");
+    printf("respectively. The first letter in your sequence will denote your choice for\n");
+    printf("the first game, the second letter for the second game, etc. up to the max\n");
+    printf("of %d games. Anything other than R, P, S will be ignored.\n", NUM_GAMES);
+    printf("\nIf you wish the sequence to repeat, simply enter one loop of the sequence.\n");
+    printf("The program will autopopulate the rest of the games to repeat that sequence.\n");
+    printf("\nPlease enter the name of your text file (including .txt): ");
 }
