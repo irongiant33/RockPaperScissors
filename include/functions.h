@@ -19,5 +19,6 @@ void display_in_game(stats_t * stats);
 void display_selection(int selection, char * string_selection);
 void set_seed();
 void display_sequence(stats_t * game_stats);
+void display_settings();
 
 #endif

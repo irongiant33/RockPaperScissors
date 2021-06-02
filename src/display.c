@@ -29,7 +29,8 @@ void display_title(int sequence_num, int bot_id)
         printf("\t 1) Human vs. Bot\n");
         printf("\t 2) Bot vs. Bot\n");
         printf("\t 3) Sequence vs. Bot\n");
-        printf("\nChoice [1-3]: ");
+        printf("\t 4) Back to Main Menu");
+        printf("\nChoice [1-4]: ");
     }
     else if(sequence_num == OPPONENT || sequence_num == FIRST_BOT)
     {
@@ -46,6 +47,13 @@ void display_title(int sequence_num, int bot_id)
             printf("\t %d) %s\n", i, bot_names[i - 1]);
         }
         printf("\nEnter a value [1-%d]: ", NUM_BOTS);
+    }
+    else if(sequence_num == MENU)
+    {
+        printf("Main Menu:\n");
+        printf("\t1) Play\n");
+        printf("\t2) Settings\n");
+        printf("\nChoice [1-2]: ");
     }
 }
 
@@ -103,7 +111,7 @@ void display_in_game(stats_t * stats)
     }
     printf("*                                                                  *\n");
     printf("********************************************************************\n");
-    if(stats->game_num < NUM_GAMES)
+    if(stats->game_num < stats->settings.num_games)
     {
         printf("\n\nThe bot has made its selection. What do you choose?\n");
         printf("\t 1) Rock\n\t 2) Paper\n\t 3) Scissors\n\n");
@@ -148,8 +156,19 @@ void display_sequence(stats_t * game_stats)
     printf("either capital or lowercase R, P, S to denote rock, paper, and scissors\n");
     printf("respectively. The first letter in your sequence will denote your choice for\n");
     printf("the first game, the second letter for the second game, etc. up to the max\n");
-    printf("of %d games. Anything other than R, P, S will be ignored.\n", NUM_GAMES);
+    printf("of %d games. Anything other than R, P, S will be ignored.\n", game_stats->settings.num_games);
     printf("\nIf you wish the sequence to repeat, simply enter one loop of the sequence.\n");
     printf("The program will autopopulate the rest of the games to repeat that sequence.\n");
     printf("\nPlease enter the name of your text file (including .txt): ");
+}
+
+void display_settings()
+{
+    system("clear");
+    printf("********************************************************************\n");
+    printf("*                                                                  *\n");
+    printf("*                           Sequence                               *\n");
+    printf("*                                                                  *\n");
+    printf("********************************************************************\n");
+    printf("\nIf you wish to change the settings, enter an appropriate value. Otherwise, just enter.\n");
 }

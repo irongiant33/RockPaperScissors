@@ -22,6 +22,12 @@ typedef struct bayes
     int priors[NUM_CHOICES];
 } bayes_t;
 
+typedef struct settings
+{
+    int num_games;
+    bool logging;
+} settings_t;
+
 typedef struct stats
 {
     int game_num;
@@ -30,6 +36,7 @@ typedef struct stats
     int num_ties;
     int bot_id;
     int user_id;
+    settings_t settings;
     char * user_selection;
     char * bot_selection;
     int * user_choice;
