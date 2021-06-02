@@ -1,1 +1,0 @@
-/usr/bin/cc -fPIC   -shared -Wl,-soname,libRockPaperScissors_code.so -o libRockPaperScissors_code.so CMakeFiles/RockPaperScissors_code.dir/src/play.c.o CMakeFiles/RockPaperScissors_code.dir/src/bots.c.o CMakeFiles/RockPaperScissors_code.dir/src/display.c.o 
